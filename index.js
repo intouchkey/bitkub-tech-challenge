@@ -41,10 +41,9 @@ async function fetchAPI(address) {
 
         json.result
           .filter((block) => {
-            block.tokenSymbol == "BKTC";
+            return block.tokenSymbol == "BKTC";
           })
           .forEach((block) => {
-            console.log(block.value);
             if (block.from.toLowerCase() == address.toLowerCase()) {
               mapResult[address] -= parseInt(block.value / 1000000000000000000);
             } else {
