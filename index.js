@@ -1,4 +1,5 @@
 var originalFetch = require("isomorphic-fetch");
+const fs = require("fs");
 var fetch = require("fetch-retry")(originalFetch, {
   retries: 5,
   retryDelay: 2500,
@@ -98,12 +99,19 @@ async function main() {
   console.log("\n\nOUTPUT 2 \n\n");
   for (const [key, value] of Object.entries(mapResult)) {
     console.log(`${count} ${key} ${value}`);
+    fs.writeFileSync("result", `${count} ${key} ${value}`);
     count += 1;
   }
 }
 
 function printBlock(block, count) {
   console.log(
+    `${count} ${block.hash} ${block.from} ${block.to} ${
+      block.value / 1000000000000000000
+    }`
+  );
+  fs.writeFileSync(
+    "result",
     `${count} ${block.hash} ${block.from} ${block.to} ${
       block.value / 1000000000000000000
     }`
